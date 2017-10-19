@@ -54,7 +54,6 @@ public class ExcavatorController {
         {
             MachineBody.AddRelativeForce(Vector3.right * driveForOrBac * Time / MachineBody.mass, ForceMode.Acceleration); //Car.transform.forward * Forward * Time.deltaTime / rigidbody.mass, ForceMode.Acceleration
         }
-        Debug.Log(MachineBody.velocity.sqrMagnitude);
         //Machine.transform.Translate(Vector3.right * Time.deltaTime * driveForOrBac);
     }
 
