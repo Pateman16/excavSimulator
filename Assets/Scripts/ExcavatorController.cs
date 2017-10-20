@@ -12,6 +12,7 @@ public class ExcavatorController {
         Machine = GameObject.Find("ExcavatorV2Simple");
         MachineBody = Machine.GetComponent<Rigidbody>();
         maxSpeed = 30f;
+        //HELLO TESTING TESTING
 
     }
 
