@@ -6,12 +6,9 @@ public class ArmController : MonoBehaviour {
 
     public GameObject ArmA, ArmB, BucketMain, Base1;
     private HingeJoint ArmAHinge, ArmBHinge, BucketHinge, Base1Hinge;
-    private ConfigurableJoint BucketConfJoint;
-    public Vector3 BucketVec;
-    private Quaternion QBucketVec;
     private float rotateArmA, rotateArmB, rotateBucketMain, rotateBase1;
     private bool driveMode;
-    public float rotationSpeed,rotationSpeedBucket;
+    public float rotationSpeed;
     private ExcavatorController exController;
 
     // Use this for initialization
@@ -20,7 +17,6 @@ public class ArmController : MonoBehaviour {
         ArmAHinge = ArmA.GetComponent<HingeJoint>();
         ArmBHinge = ArmB.GetComponent<HingeJoint>();
         BucketHinge = BucketMain.GetComponent<HingeJoint>();
-        BucketConfJoint = BucketMain.GetComponent<ConfigurableJoint>();
         Base1Hinge = Base1.GetComponent<HingeJoint>();
         rotateArmA = 0f;
         rotateArmB = 0f;
@@ -63,13 +59,14 @@ public class ArmController : MonoBehaviour {
             rotateArmA = rotateArmA + rotationSpeed;
         }
 
+        
 
         /** This jointspring is ArmA's jointspring which is set.*/
         JointSpring ArmASpring = ArmAHinge.spring;
         
         ArmASpring.targetPosition = rotateArmA;
-
-        ArmAHinge.spring = ArmASpring; 
+        Debug.Log(ArmASpring.targetPosition);
+        ArmAHinge.spring = ArmASpring;  
 
         /**
          Press leftarrow to controll the baserotation to the left*/
@@ -86,7 +83,7 @@ public class ArmController : MonoBehaviour {
         JointSpring Base1Spring = Base1Hinge.spring;
 
         Base1Spring.targetPosition = rotateBase1;
-
+        Debug.Log(Base1Spring.targetPosition);
         Base1Hinge.spring = Base1Spring;
         /**
          If drivemode = true this is the acceleraton else its the controll of the second arm*/
@@ -120,12 +117,9 @@ public class ArmController : MonoBehaviour {
         JointSpring ArmBSpring = ArmBHinge.spring;
 
         ArmBSpring.targetPosition = rotateArmB;
-
+        Debug.Log(ArmBSpring.targetPosition);
         ArmBHinge.spring = ArmBSpring;
 
-        if (BucketMain.GetComponent<Rigidbody>().IsSleeping()) {
-            BucketMain.GetComponent<Rigidbody>().WakeUp();
-        }
         /**
          If drivemode is enabled this is the turn of the vehicle, else its the bucket rotation.*/
         if (Input.GetKey(KeyCode.A))
@@ -134,10 +128,9 @@ public class ArmController : MonoBehaviour {
             {
                 exController.rotateDrive(15f);
             }
-            else
+            else if (rotateBucketMain > BucketHinge.limits.min)
             {
-                BucketVec[0] = BucketVec[0] + rotationSpeed;
-                //rotateBucketMain = rotateBucketMain - rotationSpeed;
+                rotateBucketMain = rotateBucketMain - rotationSpeed;
             }
 
         }
@@ -149,23 +142,16 @@ public class ArmController : MonoBehaviour {
             {
                 exController.rotateDrive(-15f);
             }
-            else
+            else if (rotateBucketMain < BucketHinge.limits.max)
             {
-                //BucketVec[0] = BucketVec[0] - rotationSpeed;
-                BucketVec[0] = BucketVec[0] - rotationSpeed;
-                //rotateBucketMain = rotateBucketMain + rotationSpeed;
+                rotateBucketMain = rotateBucketMain + rotationSpeed;
             }
         }
         /** This jointspring is Base1's jointspring which is set.*/
-
-        BucketConfJoint.targetPosition = BucketVec;
-        /*QBucketVec = Quaternion.Euler(BucketVec);
-        BucketConfJoint.targetRotation = QBucketVec;*/
-
-        /*JointSpring BucketMainSpring = BucketHinge.spring;
+        JointSpring BucketMainSpring = BucketHinge.spring;
 
         BucketMainSpring.targetPosition = rotateBucketMain;
-
-        BucketHinge.spring = BucketMainSpring;*/
+        Debug.Log(BucketMainSpring.targetPosition);
+        BucketHinge.spring = BucketMainSpring;
     }
 }
