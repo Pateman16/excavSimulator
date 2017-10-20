@@ -91,7 +91,7 @@ public class ArmController : MonoBehaviour {
         {
             if (driveMode)
             {
-                exController.drive(15000000f, Time.deltaTime);
+                exController.drive(1700f, Time.deltaTime);
             }
             else if(rotateArmB > ArmBHinge.limits.min)
             {
@@ -104,7 +104,7 @@ public class ArmController : MonoBehaviour {
         {
             if (driveMode)
             {
-                exController.drive(-15000000f, Time.deltaTime);
+                exController.drive(-1700f, Time.deltaTime);
             }
             else if (rotateArmB < ArmBHinge.limits.max)
             {
