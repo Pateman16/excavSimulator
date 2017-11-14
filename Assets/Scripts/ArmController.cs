@@ -35,12 +35,10 @@ public class ArmController : MonoBehaviour {
             if (driveMode)
             {
                 driveMode = false;
-                Debug.Log(driveMode);
             }
             else
             {
                 driveMode = true;
-                Debug.Log(driveMode);
             }
             
         }
@@ -65,7 +63,6 @@ public class ArmController : MonoBehaviour {
         JointSpring ArmASpring = ArmAHinge.spring;
         
         ArmASpring.targetPosition = rotateArmA;
-        Debug.Log(ArmASpring.targetPosition);
         ArmAHinge.spring = ArmASpring;  
 
         /**
@@ -83,7 +80,6 @@ public class ArmController : MonoBehaviour {
         JointSpring Base1Spring = Base1Hinge.spring;
 
         Base1Spring.targetPosition = rotateBase1;
-        Debug.Log(Base1Spring.targetPosition);
         Base1Hinge.spring = Base1Spring;
         /**
          If drivemode = true this is the acceleraton else its the controll of the second arm*/
@@ -117,7 +113,6 @@ public class ArmController : MonoBehaviour {
         JointSpring ArmBSpring = ArmBHinge.spring;
 
         ArmBSpring.targetPosition = rotateArmB;
-        Debug.Log(ArmBSpring.targetPosition);
         ArmBHinge.spring = ArmBSpring;
 
         /**
@@ -151,7 +146,6 @@ public class ArmController : MonoBehaviour {
         JointSpring BucketMainSpring = BucketHinge.spring;
 
         BucketMainSpring.targetPosition = rotateBucketMain;
-        Debug.Log(BucketMainSpring.targetPosition);
         BucketHinge.spring = BucketMainSpring;
     }
 }
