@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmController : MonoBehaviour {
+public class ArmController : MonoBehaviour
+{
 
     public GameObject ArmA, ArmB, BucketMain, Base1;
     private HingeJoint ArmAHinge, ArmBHinge, BucketHinge, Base1Hinge;
@@ -12,7 +13,8 @@ public class ArmController : MonoBehaviour {
     private ExcavatorController exController;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         exController = new ExcavatorController();
         ArmAHinge = ArmA.GetComponent<HingeJoint>();
         ArmBHinge = ArmB.GetComponent<HingeJoint>();
@@ -25,9 +27,10 @@ public class ArmController : MonoBehaviour {
         rotationSpeed = 0.5f;
         driveMode = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         /**
          Press the tab button to switch from drivingmode to working mode*/
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -40,7 +43,7 @@ public class ArmController : MonoBehaviour {
             {
                 driveMode = true;
             }
-            
+
         }
 
         /**
@@ -48,7 +51,7 @@ public class ArmController : MonoBehaviour {
         if (Input.GetKey(KeyCode.UpArrow) && rotateArmA > ArmAHinge.limits.min)
         {
             rotateArmA = rotateArmA - rotationSpeed;
- 
+
         }
         /**
          press downarrow to controll main arm down*/
@@ -57,13 +60,13 @@ public class ArmController : MonoBehaviour {
             rotateArmA = rotateArmA + rotationSpeed;
         }
 
-        
+
 
         /** This jointspring is ArmA's jointspring which is set.*/
         JointSpring ArmASpring = ArmAHinge.spring;
-        
+
         ArmASpring.targetPosition = rotateArmA;
-        ArmAHinge.spring = ArmASpring;  
+        ArmAHinge.spring = ArmASpring;
 
         /**
          Press leftarrow to controll the baserotation to the left*/
@@ -89,7 +92,7 @@ public class ArmController : MonoBehaviour {
             {
                 exController.drive(1700f, Time.deltaTime);
             }
-            else if(rotateArmB > ArmBHinge.limits.min)
+            else if (rotateArmB > ArmBHinge.limits.min)
             {
                 rotateArmB = rotateArmB - rotationSpeed;
             }

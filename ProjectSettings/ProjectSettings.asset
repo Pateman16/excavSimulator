@@ -614,7 +614,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: d73ef1d7-225d-4f16-bc06-0ce558cb968e
   projectName: ExcavatorSimulator
   organizationId: pate16

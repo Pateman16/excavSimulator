@@ -6,7 +6,8 @@ using System.IO;
 using System.IO.Pipes;
 using UnityEngine;
 
-public class PipeThreading : MonoBehaviour {
+public class PipeThreading : MonoBehaviour
+{
 
     public string datareceived = "";
     private bool isConnected = false, coroutinesStarted = false;
@@ -15,7 +16,8 @@ public class PipeThreading : MonoBehaviour {
     private BinaryReader br;
     private BinaryWriter bw;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         // Open the named pipe.
         server = new NamedPipeServerStream("NPtest");
 
@@ -29,16 +31,17 @@ public class PipeThreading : MonoBehaviour {
         br = new BinaryReader(server);
         bw = new BinaryWriter(server);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (!isConnected && coroutinesStarted)
         {
             StopAllCoroutines();
             coroutinesStarted = false;
             Debug.Log("all Coroutines stopped");
         }
-	}
+    }
 
     void OnApplicationQuit()
     {
