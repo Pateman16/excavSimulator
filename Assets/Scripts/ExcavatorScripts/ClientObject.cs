@@ -28,7 +28,7 @@ public class NetMqListener
             {
                 string frameString;
                 if (!subSocket.TryReceiveFrameString(out frameString)) continue;
-                Debug.Log(frameString);
+                //Debug.Log(frameString);
                 _messageQueue.Enqueue(frameString);
             }
             subSocket.Close();
@@ -106,7 +106,7 @@ public class ClientObject : MonoBehaviour
 
         driveButtonLeft = float.Parse(splittedStrings[5]);
         driveButtonLeft = driveButtonLeft / 1023f;
-        Debug.Log("datareceived" + datareceived);
+        //Debug.Log("datareceived" + datareceived);
         joyStickControll(xLeft, yLeft, xRight, yRight, driveButtonRight, driveButtonLeft);
 
         //transform.position = new Vector3(x, y, z);
