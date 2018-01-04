@@ -3,24 +3,23 @@ using System.Threading;
 using NetMQ;
 using UnityEngine;
 using NetMQ.Sockets;
-namespace UnityStandardAssets.Vehicles.Car
+namespace UnityStandardAssets.Vehicles.Aeroplane
 {
-    [RequireComponent(typeof(CarController))]
-    public class ClientObjectCar : MonoBehaviour
+    [RequireComponent(typeof(AeroplaneController))]
+    public class ClientObjectAircraft : MonoBehaviour
     {
         private NetMqListener _netMqListener;
         public string datareceived = "";
         private float xRight, yRight, xLeft, yLeft, driveButtonLeft, driveButtonRight;
-        private CarController m_Car; // the car controller we want to use
+        // these max angles are only used on mobile, due to the way pitch and roll input are handled
+        public float maxRollAngle = 80;
+        public float maxPitchAngle = 80;
 
-        private CarUserControl driveController;
-        private ClientObject co;
-        private float h, v, handbrake;
-        public float rotationSpeed;
+        // reference to the aeroplane that we're controlling
+        private AeroplaneController m_Aeroplane;
 
         private void HandleMessageCar(string message)
         {
-            Debug.Log(m_Car);
             datareceived = message;
             var splittedStrings = message.Split(',');
             if (splittedStrings.Length != 6) return;
@@ -42,14 +41,12 @@ namespace UnityStandardAssets.Vehicles.Car
             driveButtonLeft = driveButtonLeft / 1023f;
 
             Debug.Log("datareceived" + datareceived);
-            m_Car.Move(xLeft, yRight, yRight, driveButtonRight);
-            //transform.position = new Vector3(x, y, z);
+            m_Aeroplane.Move(xLeft, yLeft, 0, yRight, isPushed(driveButtonRight));
         }
 
         private void Start()
         {
-            m_Car = GetComponent<CarController>();
-            Debug.Log(m_Car);
+            m_Aeroplane = GetComponent<AeroplaneController>();
             _netMqListener = new NetMqListener(HandleMessageCar);
             _netMqListener.Start();
         }
@@ -62,6 +59,18 @@ namespace UnityStandardAssets.Vehicles.Car
         private void OnDestroy()
         {
             _netMqListener.Stop();
+        }
+        private bool isPushed(float val)
+        {
+            if(val == 0f)
+            {
+                return false;
+            }
+            if(val == 1f)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
